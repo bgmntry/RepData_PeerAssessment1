@@ -8,7 +8,8 @@ output:
 
 ## Loading and preprocessing the data
 
-```{r}
+
+```r
 setwd("C:/Users/troyr_000/Documents/GitHub/RepData_PeerAssessment1")
 if (!file.exists("activity.zip")){
   download.file("https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip", "activity.zip")
@@ -19,20 +20,41 @@ fitbit <- read.csv("activity.csv")
 
 ## What is mean total number of steps taken per day?
 
-```{r}
+
+```r
 hist(by(fitbit$steps, fitbit$date, sum, na.rm = TRUE), xlab = "Total Steps per Day", main = "")
 ```
 
-```{r}
+![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2-1.png) 
+
+
+```r
 mean(by(fitbit$steps, fitbit$date, sum, na.rm = TRUE))
+```
+
+```
+## [1] 9354.23
+```
+
+```r
 median(by(fitbit$steps, fitbit$date, sum, na.rm = TRUE))
+```
+
+```
+## 2012-10-20 
+##      10395
 ```
 
 ## What is the average daily activity pattern?
 
-```{r}
-plot(levels(as.factor(fitbit$interval)), by(fitbit$steps, as.factor(fitbit$interval), mean, na.rm = TRUE), type = "l", xlab = "Daily Interval", ylab = "Mean Steps Taken", main = "Average Daily Activity Pattern")
 
+```r
+plot(levels(as.factor(fitbit$interval)), by(fitbit$steps, as.factor(fitbit$interval), mean, na.rm = TRUE), type = "l", xlab = "Daily Interval", ylab = "Mean Steps Taken", main = "Average Daily Activity Pattern")
+```
+
+![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png) 
+
+```r
 meanList <- data.frame(steps = integer(), interval = integer())
 for (dayInterval in as.integer(levels(as.factor(fitbit$interval)))){
   meanList <- rbind(meanList, c(mean(fitbit$steps[fitbit$interval == dayInterval], na.rm = TRUE), dayInterval))
@@ -43,11 +65,23 @@ meanList$interval <- as.integer(meanList$interval)
 meanList$interval[meanList$steps == max(meanList$steps, na.rm = TRUE)]
 ```
 
+```
+## [1] 835
+```
+
 ## Imputing missing values
 
-```{r}
+
+```r
 w <- is.na(fitbit$steps)
 length(w[w == TRUE])
+```
+
+```
+## [1] 2304
+```
+
+```r
 fixedFitbit <- fitbit
 for (count in 1:nrow(fixedFitbit)){
   if (is.na(fixedFitbit[count,]$steps)){
@@ -58,7 +92,8 @@ for (count in 1:nrow(fixedFitbit)){
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
-```{r timeplot, fig.height= 10}
+
+```r
 fixedFitbit$date <- as.Date(fixedFitbit$date)
 daysList <- weekdays(fixedFitbit$date)
 daysList[daysList == "Sunday"] <- "weekend"
@@ -71,3 +106,5 @@ with(fixedFitbit, {
   plot(levels(as.factor(fixedFitbit$interval)), by(fixedFitbit$steps[fixedFitbit$isWeekday == "weekday"], as.factor(fixedFitbit$interval[fixedFitbit$isWeekday == "weekday"]), mean), type = "l", main = "weekday", xlab = "Interval", ylab = "Number of Steps")
 })
 ```
+
+![plot of chunk timeplot](figure/timeplot-1.png) 
