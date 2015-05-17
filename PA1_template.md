@@ -22,7 +22,7 @@ fitbit <- read.csv("activity.csv")
 
 
 ```r
-hist(by(fitbit$steps, fitbit$date, sum, na.rm = TRUE), xlab = "Total Steps per Day", main = "")
+hist(by(fitbit$steps, fitbit$date, sum, na.rm = TRUE), xlab = "Steps", main = "Total Steps per Day")
 ```
 
 ![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2-1.png) 
@@ -88,7 +88,10 @@ for (count in 1:nrow(fixedFitbit)){
     fixedFitbit[count,]$steps <- meanList$steps[meanList$interval == fixedFitbit[count,]$interval]
   }  
 }
+hist(by(fixedFitbit$steps, fixedFitbit$date, sum, na.rm = TRUE), xlab = "Total Steps per Day", main = "Total Steps per Day after Imputting NA's")
 ```
+
+![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png) 
 
 ## Are there differences in activity patterns between weekdays and weekends?
 

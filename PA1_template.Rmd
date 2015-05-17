@@ -20,7 +20,7 @@ fitbit <- read.csv("activity.csv")
 ## What is mean total number of steps taken per day?
 
 ```{r}
-hist(by(fitbit$steps, fitbit$date, sum, na.rm = TRUE), xlab = "Total Steps per Day", main = "")
+hist(by(fitbit$steps, fitbit$date, sum, na.rm = TRUE), xlab = "Steps", main = "Total Steps per Day")
 ```
 
 ```{r}
@@ -54,6 +54,7 @@ for (count in 1:nrow(fixedFitbit)){
     fixedFitbit[count,]$steps <- meanList$steps[meanList$interval == fixedFitbit[count,]$interval]
   }  
 }
+hist(by(fixedFitbit$steps, fixedFitbit$date, sum, na.rm = TRUE), xlab = "Total Steps per Day", main = "Total Steps per Day after Imputting NA's")
 ```
 
 ## Are there differences in activity patterns between weekdays and weekends?
