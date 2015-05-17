@@ -88,10 +88,27 @@ for (count in 1:nrow(fixedFitbit)){
     fixedFitbit[count,]$steps <- meanList$steps[meanList$interval == fixedFitbit[count,]$interval]
   }  
 }
-hist(by(fixedFitbit$steps, fixedFitbit$date, sum, na.rm = TRUE), xlab = "Total Steps per Day", main = "Total Steps per Day after Imputting NA's")
+hist(by(fixedFitbit$steps, fixedFitbit$date, sum), xlab = "Total Steps per Day", main = "Total Steps per Day after Imputting NA's")
 ```
 
 ![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png) 
+
+```r
+mean(by(fixedFitbit$steps, fixedFitbit$date, sum))
+```
+
+```
+## [1] 10749.77
+```
+
+```r
+median(by(fixedFitbit$steps, fixedFitbit$date, sum))
+```
+
+```
+## 2012-11-09 
+##      10641
+```
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
